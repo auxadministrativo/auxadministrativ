@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registro de Visitas | Ecodiesel Colombia S.A.</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #004b2d;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header img {
+      width: 80px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    header h1 {
+      display: inline;
+      font-size: 24px;
+      vertical-align: middle;
+    }
+
+    .container {
+      max-width: 600px;
+      background: white;
+      padding: 30px;
+      margin: 40px auto;
+      border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .container h2 {
+      text-align: center;
+      color: #004b2d;
+      margin-bottom: 20px;
+    }
+
+    form input,
+    form select,
+    form button {
+      width: 100%;
+      padding: 12px;
+      margin: 6px 0 18px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    form button {
+      background-color: #1e8449;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    form button:hover {
+      background-color: #145a32;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 12px;
+      display: block;
+      color: #004b2d;
+    }
+
+    #mensaje {
+      text-align: center;
+      color: green;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      margin-top: 40px;
+    }
+
+    .mayus {
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+ <header>
+<img src="https://raw.githubusercontent.com/auxadministrativo/auxadministrativ/main/logo_ecodiesel.png" alt="Logo Ecodiesel" style="width: 60px; vertical-align: middle; margin-right: 10px;" />
+<h1 style="display: inline-block; color: white;">ECODIESEL COLOMBIA S.A.</h1>
+ <header>
+  
+  <div class="container">
+    <h2>Registro de Visitas</h2>
+    <form id="registro-form">
+      <input type="text" name="nombre" placeholder="Nombre Completo" required class="mayus" />
+      <input type="text" name="cedula" placeholder="Cédula" required class="mayus" />
+      <input type="text" name="empresa" placeholder="Empresa" required class="mayus" />
+      <input type="text" name="placa" placeholder="Placa (opcional)" class="mayus" />
+      <input type="text" name="funcionario" placeholder="Persona a Visitar (funcionario ecodiesel)" required class="mayus" />
+      <input type="text" name="motivo" placeholder="Motivo" required class="mayus" />
+
+      <label for="fecha_ingreso">Fecha de Ingreso</label>
+      <input
+        type="date"
+        id="fecha_ingreso"
+        name="fecha_ingreso"
+        required
+        title="Seleccione la fecha de ingreso"
+      />
+
+      <label for="fecha_salida">Fecha de Salida</label>
+      <input
+        type="date"
+        id="fecha_salida"
+        name="fecha_salida"
+        required
+        title="Seleccione la fecha de salida"
+      />
+
+      <label for="hora_entrada">Hora de Entrada</label>
+      <input
+        type="time"
+        id="hora_entrada"
+        name="hora_entrada"
+        required
+        title="Seleccione la hora de entrada"
+      />
+
+      <label for="hora_salida">Hora de Salida</label>
+      <input
+        type="time"
+        id="hora_salida"
+        name="hora_salida"
+        required
+        title="Seleccione la hora de salida"
+      />
+
+      <button type="submit">Enviar Registro</button>
+    </form>
+    <p id="mensaje"></p>
+  </div>
+
+  <footer>
+    &copy; 2025 Ecodiesel Colombia S.A. | Todos los derechos reservados
+  </footer>
+
+  <script>
+    // Convierte campos en mayúscula automáticamente al escribir
+    document.querySelectorAll('.mayus').forEach((input) => {
+      input.addEventListener('input', () => {
+        input.value = input.value.toUpperCase();
+      });
+    });
+
+    // Enviar formulario
+    const form = document.getElementById('registro-form');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const url =
+        'https://script.google.com/macros/s/AKfycbwv3fnpEUE0cCeB1kQphEiw4AVnMYgWOoiZL__9L2nDmopnufxgqdESb_Zy__3dtd7w/exec';
+
+      fetch(url, {
+  method: 'POST',
+  body: formData,
+})
+.then(response => response.text())
+.then(text => {
+  document.getElementById('mensaje').innerText = '✅ ' + text;
+  form.reset();
+})
+.catch(error => {
+  document.getElementById('mensaje').innerText = '❌ Error al registrar: ' + error;
+});
+
+
+      document.getElementById('mensaje').innerText =
+        '✅ Registro enviado exitosamente a Ecodiesel.';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
