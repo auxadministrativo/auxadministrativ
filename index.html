@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro de Visitas - ECODIESEL COLOMBIA S.A.</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1fdf6;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #1b4332;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: white;
+    }
+
+    header img {
+      height: 50px;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    main {
+      max-width: 700px;
+      background-color: #ffffff;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    main h2 {
+      text-align: center;
+      color: #1b4332;
+      margin-top: 0;
+      font-size: 1.4rem;
+    }
+
+    form label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+      color: #1b4332;
+    }
+
+    form input {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    form input::placeholder {
+      color: #888;
+      font-style: italic;
+    }
+
+    form input:focus {
+      outline: none;
+      border-color: #40916c;
+      box-shadow: 0 0 5px #95d5b2;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      margin-top: 2rem;
+      padding: 0.8rem;
+      font-size: 1rem;
+      background-color: #2d6a4f;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #40916c;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="Logo ECODIESEL" />
+    <h1>ECODIESEL COLOMBIA S.A.</h1>
+  </header>
+
+  <main>
+    <h2>Registro de Visitas</h2>
+    <form id="formulario">
+      <label>Nombre completo: <input name="nombre" required></label>
+      <label>Cédula: <input name="cedula" required></label>
+      <label>Empresa: <input name="empresa"></label>
+      <label>Placa del vehículo:
+        <input name="placa" placeholder="Placa (opcional)">
+      </label>
+      <label>Funcionario que visita: <input name="funcionario"></label>
+      <label>Motivo: <input name="motivo"></label>
+      <label>Fecha de ingreso: <input type="date" name="fecha_ingreso" required></label>
+      <label>Fecha de salida: <input type="date" name="fecha_salida" required></label>
+      <label>Hora de entrada: <input type="time" name="hora_entrada" required></label>
+      <label>Hora de salida: <input type="time" name="hora_salida" required></label>
+      <button type="submit">Enviar</button>
+    </form>
+  </main>
+
+  <footer>
+    © 2025 ECODIESEL COLOMBIA S.A. | Todos los derechos reservados
+  </footer>
+
+  <script>
+    const URL = "https://script.google.com/macros/s/AKfycbxXy102n18uGgh1Q2OPoYyVCKsLOKF570-4sQMBZ2YShCccm9hn24Bnp2OZZI1Ydlo4/exec";
+
+    document.getElementById("formulario").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const form = this;
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => data[key] = value);
+
+      fetch(URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      })
+      .then(() => {
+        alert("✅ Registro enviado correctamente");
+        form.reset();
+      })
+      .catch(() => alert("❌ Error al enviar el registro"));
+    });
+  </script>
+
+</body>
+</html>
+
