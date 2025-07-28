@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro de Visitas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.75rem;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Formulario de Registro de Visitas</h2>
+  <form id="formulario">
+    <label>Nombre completo: <input name="nombre" required></label>
+    <label>Cédula: <input name="cedula" required></label>
+    <label>Empresa: <input name="empresa"></label>
+    <label>Placa del vehículo: <input name="placa"></label>
+    <label>Funcionario que visita: <input name="funcionario"></label>
+    <label>Motivo: <input name="motivo"></label>
+    <label>Fecha de ingreso: <input type="date" name="fecha_ingreso" required></label>
+    <label>Fecha de salida: <input type="date" name="fecha_salida" required></label>
+    <label>Hora de entrada: <input type="time" name="hora_entrada" required></label>
+    <label>Hora de salida: <input type="time" name="hora_salida" required></label>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    const URL = "https://script.google.com/macros/s/AKfycbxXy102n18uGgh1Q2OPoYyVCKsLOKF570-4sQMBZ2YShCccm9hn24Bnp2OZZI1Ydlo4/exec";
+
+    document.getElementById("formulario").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => data[key] = value);
+
+      fetch(URL, {
+        method: "POST",
+        mode: "no-cors", // ⚠️ Esto evita el CORS error
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      })
+      .then(() => alert("✅ Registro enviado correctamente"))
+      .catch(() => alert("❌ Error al enviar el registro"));
+    });
+  </script>
+</body>
+</html>
