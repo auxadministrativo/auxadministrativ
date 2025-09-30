@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>REGISTRO DE VISITAS - ECODIESEL COLOMBIA S.A.</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #154428; /* Verde corporativo */
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase; /* TODO EN MAYÚSCULA */
+    }
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #1e5132;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-transform: uppercase;
+    }
+    button {
+      background-color: #1e5132;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 8px;
+      width: 100%;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #0f331e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>REGISTRO DE VISITAS</h2>
+    <form id="visitForm">
+      <label>NOMBRE COMPLETO: <input name="nombre" required></label>
+      <label>CÉDULA: <input name="cedula" required></label>
+      <label>EMPRESA: <input name="empresa" required></label>
+      <label>PLACA DEL VEHÍCULO: <input name="placa"></label>
+      <label>FUNCIONARIO QUE VISITA: <input name="funcionario" required></label>
+      <label>ÁREA:
+        <select name="area" required>
+          <option>MANTENIMIENTO</option>
+          <option>RHH</option>
+          <option>COMERCIAL</option>
+          <option>ADMINISTRATIVO</option>
+          <option>INFRAESTRUCTURA</option>
+          <option>CONTABILIDAD</option>
+          <option>FINANCIERA</option>
+          <option>CALIDAD</option>
+          <option>PROYECTOS</option>
+          <option>LOGÍSTICA</option>
+          <option>INNOVACIÓN</option>
+          <option>SST</option>
+          <option>PRODUCCIÓN</option>
+        </select>
+      </label>
+      <label>MOTIVO: <input name="motivo" required></label>
+      <label>FECHA DE INGRESO: <input type="date" name="fecha_ingreso" required></label>
+      <label>FECHA DE SALIDA: <input type="date" name="fecha_salida" required></label>
+      <label>HORA DE ENTRADA: <input type="time" name="hora_entrada" required></label>
+      <label>HORA DE SALIDA: <input type="time" name="hora_salida" required></label>
+      <label>TIPO DE INGRESO:
+        <select name="tipo_ingreso" required>
+          <option>GRB Y ZF</option>
+          <option>GRB</option>
+          <option>ZF</option>
+        </select>
+      </label>
+      <button type="submit">ENVIAR</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("visitForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+
+      // Convierte todo a mayúsculas antes de enviar
+      const formData = new FormData(form);
+      for (let [key, value] of formData.entries()) {
+        formData.set(key, value.toUpperCase());
+      }
+
+      try {
+        await fetch("https://script.google.com/macros/s/AKfycbx8CVaxw5KZ0uAoTZr2ZTWg8-nOAoH5iYwP2MPcd9C6CPFfbxNtEaYxiCVepaLBhC3j-A/exec", {
+          method: "POST",
+          mode: "no-cors", // 👈 IMPORTANTE PARA GITHUB PAGES
+          body: new URLSearchParams([...formData]),
+        });
+
+        alert("✅ FORMULARIO ENVIADO CORRECTAMENTE");
+        form.reset();
+      } catch (error) {
+        alert("⚠️ NO SE PUDO CONECTAR AL SERVIDOR: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
+
